@@ -9,6 +9,6 @@ const router = express.Router();
 router.get("/videogames", getVideogames);
 router.get("/videogames/:idVideogame", getVideogameById);
 router.post("/videogames", postVideogame);
-router.get("/genre", getGenres);
+router.get("/genres", getGenres);
 
 module.exports = router;
