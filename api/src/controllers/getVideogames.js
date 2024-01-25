@@ -1,16 +1,6 @@
 const { Videogame, Genre } = require("../DB_connection");
+const { Op } = require("sequelize");
 const axios = require("axios");
-
-// * GET | /videogames
-// Obtiene un arreglo de objetos, donde cada objeto es un videojuego con su información.
-// Debe poder buscarlo independientemente de mayúsculas o minúsculas.
-//! IMPORTANTE: debido a que en la API existen alrededor de 500.000 videojuegos, por cuestiones de performance puedes tomar la simplificación de obtener y paginar los primeros 100 videojuegos.
-
-// * GET | /videogames/name?="..."
-// Esta ruta debe obtener los primeros 15 videojuegos que se encuentren con la palabra recibida por query.
-// Debe poder buscarlo independientemente de mayúsculas o minúsculas.
-// Si no existe el videojuego, debe mostrar un mensaje adecuado.
-// Debe buscar tanto los de la API como los de la base de datos.
 
 const getVideogames = async (req, res) => {
   const { APIKEY } = process.env;
@@ -21,15 +11,16 @@ const getVideogames = async (req, res) => {
   const MAXRESULTSQUERY = 15;
   const { name } = req.query;
   try {
-    //* Solo enviar id, name, genres, image y agrego un flag userCreated
-    //GET videogames
+    //* Solo enviar id, name, genres, image y userCreated
     if (!name) {
+      //GET videogames
       //Traer los juegos de la DB, con los generos asociados
       const gamesDb = await Videogame.findAll({
-        atributes: ["id", "name", "background_image"],
+        attributes: ["id", "name", "background_image", "userCreated"],
         include: {
           model: Genre,
           as: "genres",
+          attributes: ["id", "name"],
           through: {
             attributes: [],
           },
@@ -47,12 +38,53 @@ const getVideogames = async (req, res) => {
           name: game.name,
           background_image: game.background_image,
           genres: game.genres,
+          userCreated: false,
         };
       });
 
       const allGames = [...gamesDb, ...gamesApi];
-      if (allGames.length < 1) return res.status(404).send("Games not Found");
+      if (allGames.length < 1)
+        return res.status(404).send("No se encontró ningún juego");
       return res.json(allGames);
+    } else {
+      //GET videogames?name=...
+      const gamesDb2 = await Videogame.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+        },
+        attributes: ["id", "name", "background_image", "userCreated"],
+        include: {
+          model: Genre,
+          as: "genres",
+          attributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
+        },
+        limit: MAXRESULTSQUERY,
+      });
+      if (MAXRESULTSQUERY - gamesDb2.length > 0) {
+        const { data } = await axios(
+          `${URL}?page=1&page_size=${
+            MAXRESULTSQUERY - gamesDb2.length
+          }&key=${APIKEY}&search=${name}`
+        );
+
+        var gamesApi2 = data.results.map((game) => {
+          return {
+            id: game.id,
+            name: game.name,
+            background_image: game.background_image,
+            genres: game.genres,
+            userCreated: false,
+          };
+        });
+      }
+      const allGames2 = [...gamesDb2, ...gamesApi2];
+
+      if (allGames2.length < 1)
+        return res.status(404).send("No se encontró ningún juego");
+      return res.json(allGames2);
     }
   } catch (error) {
     res.status(500).send(error.message);

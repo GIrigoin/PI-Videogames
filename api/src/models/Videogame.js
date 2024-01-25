@@ -19,6 +19,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     description: {
       type: DataTypes.STRING,
@@ -36,6 +37,11 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.FLOAT,
       allowNull: false,
+    },
+    userCreated: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
   });
 };
