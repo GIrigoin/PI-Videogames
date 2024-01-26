@@ -1,5 +1,4 @@
 const { Genre } = require("../DB_connection");
-const axios = require("axios");
 
 const getGenres = async (req, res) => {
   try {
@@ -9,7 +8,6 @@ const getGenres = async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
-  res.status(200).send("get genres");
 };
 
 module.exports = getGenres;
