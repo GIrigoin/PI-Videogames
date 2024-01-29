@@ -34,7 +34,7 @@ const postVideogame = async (req, res) => {
     //Añadir los generos a la tabla intermedia
     await newGame.addGenres(genres);
 
-    return res.status(201).send("Videojuego añadido");
+    return res.status(201).send("Videojuego añadido correctamente");
   } catch (error) {
     res.status(500).send(error.message);
   }

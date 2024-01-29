@@ -28,7 +28,7 @@ const getVideogameById = async (req, res) => {
 
     //Si el id es de la API
     const { data } = await axios(`${URL}/${idVideogame}?key=${APIKEY}`);
-    const {
+    let {
       id,
       name,
       description,
@@ -37,6 +37,8 @@ const getVideogameById = async (req, res) => {
       released,
       rating,
     } = data;
+    //Reformatear platforms
+    platforms = platforms.map((element) => element.platform.name);
 
     const gameAPI = {
       id,
@@ -49,7 +51,7 @@ const getVideogameById = async (req, res) => {
     };
     return res.json(gameAPI);
   } catch (error) {
-    if (error.response.status === 404)
+    if (error.response && error.response.status === 404)
       return res.status(404).send("No se encotró ningun juego con ese Id");
     res.status(500).send(error.message);
   }
