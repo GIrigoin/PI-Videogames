@@ -12,17 +12,11 @@ const updateVideogame = async (req, res) => {
     genres,
   } = req.body;
   try {
-    if (!name)
-      return res
-        .status(400)
-        .send("Debe especificar el nombre del video juego a actualizar");
+    if (!name) return res.status(400).send("Game's name is required");
 
     //Ver que haya un juego con ese nombre y de paso guardar la instancia para añadir generos (si hay) en la tabla intermedia
     const updatedVideogame = await Videogame.findOne({ where: { name } });
-    if (!updatedVideogame)
-      return res
-        .status(404)
-        .send("No se encontró ningun videojuego con ese nombre");
+    if (!updatedVideogame) return res.status(404).send("Game not found");
 
     let attributes = {};
 
@@ -44,7 +38,7 @@ const updateVideogame = async (req, res) => {
       await updatedVideogame.setGenres(genres);
     }
 
-    return res.send("Info del videojuego actualizada");
+    return res.send("Game's info updated");
   } catch (error) {
     res.status(500).send(error.message);
   }

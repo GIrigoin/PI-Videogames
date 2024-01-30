@@ -43,9 +43,8 @@ const getVideogames = async (req, res) => {
       });
 
       const allGames = [...gamesDb, ...gamesApi];
-      if (allGames.length < 1)
-        return res.status(404).send("No se encontró ningún juego");
-      return res.json(allGames);
+      if (allGames.length < 1) return res.status(404).send("Games not found");
+      return res.status(200).json(allGames);
     } else {
       //GET videogames?name=...
       const gamesDb2 = await Videogame.findAll({
@@ -82,8 +81,7 @@ const getVideogames = async (req, res) => {
       }
       const allGames2 = [...gamesDb2, ...gamesApi2];
 
-      if (allGames2.length < 1)
-        return res.status(404).send("No se encontró ningún juego");
+      if (allGames2.length < 1) return res.status(404).send("Games not found");
       return res.json(allGames2);
     }
   } catch (error) {

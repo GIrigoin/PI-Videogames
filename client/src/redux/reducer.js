@@ -1,8 +1,15 @@
-import { LOAD_GAMES, FILTER, ORDER } from "./actionTypes";
+import {
+  LOAD_GAMES,
+  FILTER,
+  ORDER,
+  LOAD_GENRES,
+  SEARCH_BY_NAME,
+} from "./actionTypes";
 
 const initialState = {
   allGames: [],
   showedGames: [],
+  genres: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +41,47 @@ const reducer = (state = initialState, action) => {
       };
 
     case ORDER:
+      const { criteria, order } = action.payload;
+      const compareFn = (curr, next) => {
+        let currCompItem;
+        let nextCompItem;
+        //definir los elementos a comparar segun el criterio
+        if (criteria === "Name") {
+          currCompItem = curr.name.toUpperCase();
+          nextCompItem = next.name.toUpperCase();
+        } else if (criteria === "Rating") {
+          currCompItem = curr.rating;
+          nextCompItem = next.rating;
+        }
+        // Usar estos elementos para generar la ordenación en el sentido indicado por order
+        if (order === "ASC") {
+          if (currCompItem < nextCompItem) return -1;
+          if (currCompItem > nextCompItem) return 1;
+          return 0;
+        }
+        if (order === "DES") {
+          if (currCompItem > nextCompItem) return -1;
+          if (currCompItem < nextCompItem) return 1;
+          return 0;
+        }
+      };
+      const sortedGames = showedGames.toSorted(compareFn);
+      return {
+        ...state,
+        showedGames: sortedGames,
+      };
+
+    case LOAD_GENRES:
+      return {
+        ...state,
+        genres: action.payload,
+      };
+    case SEARCH_BY_NAME:
+      return {
+        ...state,
+        showedGames: action.payload,
+        allGames: action.payload,
+      };
     default:
       return { ...state };
   }

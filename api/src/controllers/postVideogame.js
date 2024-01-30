@@ -12,7 +12,7 @@ const postVideogame = async (req, res) => {
   } = req.body;
   try {
     if (!name || !description || !rating)
-      return res.status(400).send("Faltan datos");
+      return res.status(400).send("Missing datafields");
 
     const defaults = {
       description,
@@ -28,13 +28,12 @@ const postVideogame = async (req, res) => {
       defaults,
     });
 
-    if (!created)
-      return res.status(400).send("El Videojuego ya existe en la DB");
+    if (!created) return res.status(400).send("The game is already stored");
 
     //Añadir los generos a la tabla intermedia
     await newGame.addGenres(genres);
 
-    return res.status(201).send("Videojuego añadido correctamente");
+    return res.status(201).send("Game successfully added");
   } catch (error) {
     res.status(500).send(error.message);
   }

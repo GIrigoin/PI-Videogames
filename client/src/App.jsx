@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "./views/NotFound";
-import Landing from "./views/Landing";
-import Home from "./views/Home";
-import Detail from "./views/Detail";
-import AddGame from "./views/AddGame";
-
+import NotFound from "./views/NotFound/NotFound";
+import Landing from "./views/Landing/Landing";
+import Home from "./views/Home/Home";
+import Detail from "./views/Detail/Detail";
+import AddGame from "./views/AddGame/AddGame";
+import { useDispatch } from "react-redux";
+import { loadGames, loadGenres } from "./redux/actions";
 function App() {
+  //Al cargar la app traer del back los juegosy los géneros al estado de Redux
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadGames());
+    dispatch(loadGenres());
+  }, []);
+
   return (
     <div>
       <Routes>
