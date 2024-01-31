@@ -7,7 +7,7 @@ const getVideogames = async (req, res) => {
   const URL = "https://api.rawg.io/api/games";
 
   //!Cambiar a 100 cuando funcione
-  const MAXRESULTS = 10;
+  const MAXRESULTS = 100;
   const MAXRESULTSQUERY = 15;
   const { name } = req.query;
   try {
@@ -16,7 +16,7 @@ const getVideogames = async (req, res) => {
       //GET videogames
       //Traer los juegos de la DB, con los generos asociados
       const gamesDb = await Videogame.findAll({
-        attributes: ["id", "name", "background_image", "userCreated"],
+        attributes: ["id", "name", "background_image", "rating", "userCreated"],
         include: {
           model: Genre,
           as: "genres",
@@ -38,6 +38,7 @@ const getVideogames = async (req, res) => {
           name: game.name,
           background_image: game.background_image,
           genres: game.genres,
+          rating: game.rating,
           userCreated: false,
         };
       });
@@ -51,7 +52,7 @@ const getVideogames = async (req, res) => {
         where: {
           name: { [Op.iLike]: `%${name}%` },
         },
-        attributes: ["id", "name", "background_image", "userCreated"],
+        attributes: ["id", "name", "background_image", "rating", "userCreated"],
         include: {
           model: Genre,
           as: "genres",
@@ -75,6 +76,7 @@ const getVideogames = async (req, res) => {
             name: game.name,
             background_image: game.background_image,
             genres: game.genres,
+            rating: game.rating,
             userCreated: false,
           };
         });

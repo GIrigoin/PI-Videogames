@@ -9,7 +9,7 @@ import AddGame from "./views/AddGame/AddGame";
 import { useDispatch } from "react-redux";
 import { loadGames, loadGenres } from "./redux/actions";
 function App() {
-  //Al cargar la app traer del back los juegosy los géneros al estado de Redux
+  //Al cargar la app traer del back los juegos y los géneros al estado de Redux
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadGames());

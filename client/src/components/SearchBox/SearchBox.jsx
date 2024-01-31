@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchByName } from "../../redux/actions";
+import { searchByName, loadGames } from "../../redux/actions";
 
-const SearchBox = () => {
+const SearchBox = ({ resetFilters, resetOrder }) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
 
@@ -12,6 +12,13 @@ const SearchBox = () => {
 
   const handleClick = () => {
     dispatch(searchByName(name));
+    resetFilters();
+    resetOrder();
+  };
+  const handleResetClick = () => {
+    dispatch(loadGames());
+    resetFilters();
+    resetOrder();
   };
 
   return (
@@ -25,6 +32,7 @@ const SearchBox = () => {
       <button disabled={name.length < 2} onClick={handleClick}>
         Search
       </button>
+      <button onClick={handleResetClick}>Reset</button>
     </div>
   );
 };

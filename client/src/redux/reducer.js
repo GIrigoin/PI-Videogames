@@ -21,18 +21,25 @@ const reducer = (state = initialState, action) => {
         showedGames: action.payload,
       };
     case FILTER:
-      const { genre, useCreated } = action.payload;
+      const { genre, userCreated } = action.payload;
       //Primero el genero
-      let filteredGamesByGenre = "All"
-        ? state.allGames
-        : state.allGames.filter((game) =>
-            game.genres.findIndex((element) => (element.id = genre))
-          );
+      let filteredGamesByGenre =
+        genre === "All"
+          ? state.allGames
+          : state.allGames.filter(
+              (game) =>
+                game.genres.findIndex(
+                  (element) => element.id === parseInt(genre)
+                ) > -1
+            );
 
       //Segundo por creador
-      let filteredGames = "All"
-        ? filteredGamesByGenre
-        : filteredGamesByGenre.filter((game) => game.useCreated === useCreated);
+      let filteredGames =
+        userCreated === "All"
+          ? filteredGamesByGenre
+          : filteredGamesByGenre.filter(
+              (game) => game.userCreated == parseInt(userCreated)
+            );
 
       //El resultado de los dos niveles de filtrado se copia en el estado
       return {
@@ -46,10 +53,10 @@ const reducer = (state = initialState, action) => {
         let currCompItem;
         let nextCompItem;
         //definir los elementos a comparar segun el criterio
-        if (criteria === "Name") {
+        if (criteria === "name") {
           currCompItem = curr.name.toUpperCase();
           nextCompItem = next.name.toUpperCase();
-        } else if (criteria === "Rating") {
+        } else if (criteria === "rating") {
           currCompItem = curr.rating;
           nextCompItem = next.rating;
         }
@@ -65,7 +72,7 @@ const reducer = (state = initialState, action) => {
           return 0;
         }
       };
-      const sortedGames = showedGames.toSorted(compareFn);
+      const sortedGames = state.showedGames.toSorted(compareFn);
       return {
         ...state,
         showedGames: sortedGames,

@@ -19,14 +19,14 @@ const loadGames = () => {
   };
 };
 
-const filterGames = (genre, userCreated) => {
+const filterGames = ({ genre, userCreated }) => {
   return {
     type: FILTER,
     payload: { genre, userCreated },
   };
 };
 
-const orderGames = (criteria, order) => {
+const orderGames = ({ criteria, order }) => {
   return {
     type: ORDER,
     payload: { criteria, order },
