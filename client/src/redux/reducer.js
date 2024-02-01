@@ -4,12 +4,18 @@ import {
   ORDER,
   LOAD_GENRES,
   SEARCH_BY_NAME,
+  SET_MODAL,
 } from "./actionTypes";
 
 const initialState = {
   allGames: [],
   showedGames: [],
   genres: [],
+  modalDialog: {
+    show: false,
+    message: "",
+    type: "",
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -88,6 +94,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         showedGames: action.payload,
         allGames: action.payload,
+      };
+    case SET_MODAL:
+      return {
+        ...state,
+        modalDialog: action.payload,
       };
     default:
       return { ...state };

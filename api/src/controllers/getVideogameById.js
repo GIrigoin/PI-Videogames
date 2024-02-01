@@ -36,6 +36,7 @@ const getVideogameById = async (req, res) => {
       background_image,
       released,
       rating,
+      genres,
     } = data;
     //Reformatear platforms
     platforms = platforms.map((element) => element.platform.name);
@@ -48,6 +49,7 @@ const getVideogameById = async (req, res) => {
       background_image,
       released,
       rating,
+      genres,
     };
     return res.json(gameAPI);
   } catch (error) {

@@ -4,6 +4,7 @@ import {
   ORDER,
   LOAD_GENRES,
   SEARCH_BY_NAME,
+  SET_MODAL,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -52,10 +53,30 @@ const searchByName = (name) => {
       .then(({ data }) => {
         return dispatch({ type: SEARCH_BY_NAME, payload: data });
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => {
+        dispatch(
+          setModal({ show: true, type: "error", message: error.response.data })
+        );
+        setTimeout(() => {
+          dispatch(setModal({ show: false }));
+        }, 2000);
+        // console.log(error.response.data);
+      });
   };
 };
 
-//falta paginado
+const setModal = ({ show, message, type }) => {
+  return {
+    type: SET_MODAL,
+    payload: { show, message, type },
+  };
+};
 
-export { loadGames, filterGames, orderGames, loadGenres, searchByName };
+export {
+  loadGames,
+  filterGames,
+  orderGames,
+  loadGenres,
+  searchByName,
+  setModal,
+};

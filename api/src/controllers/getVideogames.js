@@ -83,7 +83,8 @@ const getVideogames = async (req, res) => {
       }
       const allGames2 = [...gamesDb2, ...gamesApi2];
 
-      if (allGames2.length < 1) return res.status(404).send("Games not found");
+      if (allGames2.length < 1)
+        return res.status(404).send("Can't find any game");
       return res.json(allGames2);
     }
   } catch (error) {
