@@ -14,7 +14,7 @@ const AddGame = () => {
     description: "", //obligatorio, min 50 caracteres
     platforms: [], //opcional, las entradas deben ser no nulas
     released: "", //opcional, fecha YYYY-MM-DD
-    rating: "", //obligatorio, min=0 max=5
+    rating: 2.5, //obligatorio, min=0 max=5
     genres: [], //opcional
   };
   const initialErrors = {
@@ -27,10 +27,52 @@ const AddGame = () => {
   const [gameForm, setGameForm] = useState(initialGameform);
   const [errors, setErrors] = useState(initialErrors);
   const [platform, setPlatform] = useState("");
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  const validate = (name, value) => {
+    const nameRegex = /^[A-Za-z0-9@\s\-._()&!?']{1,100}$/;
+    const urlRegex =
+      /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/;
+    const dateRegex =
+      /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
+
+    switch (name) {
+      case "name":
+        const words = value.split(" ");
+        if (!value) return "Name is required";
+        if (!words.every((word) => word.length > 0))
+          return "Invalid use of spaces";
+        if (!nameRegex.test(value))
+          return "Name only could contain alphanumeric characters or @ ( ) & ' . _ - ! ?";
+        return "";
+      case "image":
+        if (!urlRegex.test(value)) return "Not a valid URL";
+        return "";
+
+      case "description":
+        if (!value) return "A description is required (min. 50 characters)";
+        if (value.length < 50) return "Minimun 50 characters";
+        return "";
+      case "released":
+        const year = value.split("-")[0];
+        if (parseInt(year) > 2050) return "The year must be lower than 2050";
+        if (!dateRegex.test(value)) return "The date format must be YYYY-MM-DD";
+        return "";
+      case "rating":
+        if (value < 0 || value > 5) return "Rating must be between 0 and 5";
+        return "";
+      default:
+        break;
+    }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setGameForm({ ...gameForm, [name]: value });
+    const errorMessage = validate(name, value);
+    setErrors({ ...errors, [name]: errorMessage });
+    const errorMessages = Object.values(errors);
+    setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
   const handlePlatformChange = (event) => {
     setPlatform(event.target.value);
@@ -38,9 +80,11 @@ const AddGame = () => {
 
   const handlePlatformsClick = (event) => {
     event.preventDefault();
-    const platforms = gameForm.platforms;
-    platforms.push(platform);
-    setGameForm({ ...gameForm, platforms });
+    if (!gameForm.platforms.includes(platform) && platform) {
+      const platforms = gameForm.platforms;
+      platforms.push(platform);
+      setGameForm({ ...gameForm, platforms });
+    }
   };
 
   const handleDelPlatformsClick = (event) => {
@@ -63,7 +107,11 @@ const AddGame = () => {
   };
 
   //Control del dialog box
-  const [disabledSubmit, setDisabledSubmit] = useState(true);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const description = `<p>${gameForm.description}</p>`;
+    setGameForm({ ...gameForm, description });
+  };
 
   return (
     <div>
@@ -71,19 +119,21 @@ const AddGame = () => {
       <div>
         <h1>Add Game Info</h1>
       </div>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <fieldset>
-          <legend htmlFor="">Name: </legend>
+          <legend>Name: </legend>
           <input
             type="text"
             name="name"
             value={gameForm.name}
             onChange={handleChange}
+            required="true"
           />
+          <span> *</span>
           <p>{errors.name}</p>
         </fieldset>
         <fieldset>
-          <legend htmlFor="">Image: </legend>
+          <legend>Image: </legend>
           <input
             type="text"
             name="image"
@@ -93,7 +143,7 @@ const AddGame = () => {
           <p>{errors.image}</p>
         </fieldset>
         <fieldset>
-          <legend htmlFor="">Release date: </legend>
+          <legend>Release date: </legend>
           <input
             type="date"
             name="released"
@@ -103,17 +153,28 @@ const AddGame = () => {
           <p>{errors.released}</p>
         </fieldset>
         <fieldset>
-          <legend htmlFor="">Rating: </legend>
+          <legend>Rating: </legend>
+
+          <div>
+            <span>0 </span>
+            <input
+              type="range"
+              name="rating"
+              min="0"
+              max="5"
+              step="0.5"
+              value={gameForm.rating}
+              onChange={handleChange}
+            />
+            <span> 5 *</span>
+          </div>
           <input
-            type="range"
+            type="text"
             name="rating"
-            min="0"
-            max="5"
-            step="0.5"
             value={gameForm.rating}
             onChange={handleChange}
+            required="true"
           />
-          <p>{gameForm.rating}</p>
         </fieldset>
         <fieldset>
           <legend>Platforms: </legend>
@@ -163,10 +224,13 @@ const AddGame = () => {
             rows="10"
             onChange={handleChange}
           ></textarea>
+          <span> *</span>
           <p>{errors.description}</p>
         </fieldset>
         <div>
-          <button type="submit">Add to DB</button>
+          <button type="submit" disabled={disableSubmit}>
+            Add to DB
+          </button>
         </div>
       </form>
 
