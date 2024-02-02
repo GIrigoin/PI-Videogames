@@ -1,0 +1,9 @@
+.divTest {
+  background-image: url("../../assets/MushroomTile.png");
+  background-repeat: repeat;
+  width: 50vw;
+  height: 50vh;
+  border-radius: 30px;
+  border-style: ridge;
+  border-width: 15px;
+}
