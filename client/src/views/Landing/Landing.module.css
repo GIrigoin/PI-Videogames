@@ -1,0 +1,57 @@
+.divContainer {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Press Start 2P", system-ui;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 7% 0;
+}
+
+.divImage {
+  background-color: rgb(183, 239, 254, 0.8);
+  width: 80vw;
+  height: 30vw;
+  border: 20px;
+  border-color: lightgray;
+  border-style: ridge;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3%;
+  box-shadow: 0 0 0px 1px #000000, 0 0 10px 2px #0f0f0f,
+    inset 0 0 0px 1px #000000, inset 0 0 10px 2px #0f0f0f;
+}
+.logo {
+  width: 75vw;
+}
+.divButtons {
+  background-color: rgb(183, 239, 254, 0.8);
+  border: 10px;
+  border-style: ridge;
+  border-radius: 15px;
+  width: 25vw;
+  box-shadow: 0 0 0px 1px #000000, 0 0 10px 2px #0f0f0f,
+    inset 0 0 0px 1px #000000, inset 0 0 10px 2px #0f0f0f;
+  border-color: lightgray;
+}
+.divButton {
+  font-size: 2em;
+  margin: 10px;
+}
+.divButton:hover::before {
+  content: "👉🏻" /* value */;
+  /* properties */
+}
+
+@media screen and (max-width: 1024px) {
+  .divImage {
+    margin-bottom: 15%;
+  }
+  .divButton {
+    font-size: 1em;
+  }
+}

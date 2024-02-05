@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Pagination from "../Pagination/Pagination";
 import { useSelector } from "react-redux";
+import styles from "./Cards.module.css";
 
 const Cards = () => {
   const showedGames = useSelector((state) => state.showedGames);
@@ -42,9 +43,11 @@ const Cards = () => {
 
   return (
     <div>
-      {showedCards.map((game) => {
-        return <Card {...game} key={game.id} />;
-      })}
+      <div className={styles.divCards}>
+        {showedCards.map((game) => {
+          return <Card {...game} key={game.id} />;
+        })}
+      </div>
       <Pagination
         currentPage={currentPage}
         LAST_PAGE={LAST_PAGE}

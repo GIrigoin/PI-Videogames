@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import styles from "./Landing.module.css";
+import logo from "../../assets/Logo.svg";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -9,19 +11,42 @@ const Landing = () => {
     );
     await player.play();
   };
-  const handleClick = async () => {
+  const handleClick = async (event) => {
     const player = new Audio(
       "https://dl.vgmdownloads.com/soundtracks/super-mario-bros.-3-1988-nes/ciqzdtyhux/36.%20Level%20Start.mp3"
     );
     await player.play();
-    navigate("/home");
+    event.target.innerHTML === "Home"
+      ? navigate("/home")
+      : navigate("/addgame");
   };
   return (
-    <div>
-      <div>Super Videogames Database 2</div>
+    <div className={styles.divContainer}>
+      <div className={styles.divImage}>
+        <img
+          src={logo}
+          alt="Super Videogames Database 2"
+          className={styles.logo}
+        />
+      </div>
+      <div className={styles.divButtons}>
+        <div
+          onClick={handleClick}
+          onMouseOver={handleMouseOver}
+          name="home"
+          className={styles.divButton}
+        >
+          Home
+        </div>
 
-      <div onClick={handleClick} onMouseOver={handleMouseOver}>
-        Ingresar
+        <div
+          onClick={handleClick}
+          onMouseOver={handleMouseOver}
+          name="add"
+          className={styles.divButton}
+        >
+          Add Game
+        </div>
       </div>
     </div>
   );

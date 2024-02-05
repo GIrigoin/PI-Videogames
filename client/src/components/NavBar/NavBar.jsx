@@ -4,6 +4,7 @@ import FilterBox from "../FilterBox/FilterBox";
 import OrderBox from "../OrderBox/OrderBox";
 import { useDispatch, useSelector } from "react-redux";
 import { filterGames, orderGames } from "../../redux/actions";
+import styles from "./NavBar.module.css";
 
 const NavBar = () => {
   const showedGames = useSelector((state) => state.showedGames);
@@ -55,10 +56,10 @@ const NavBar = () => {
   };
 
   return (
-    <div>
-      <SearchBox resetFilters={resetFilters} resetOrder={resetOrder} />
+    <div className={styles.divNavBar}>
       <FilterBox filters={filters} handleFiltersChange={handleFiltersChange} />
       <OrderBox order={order} handleOrderChange={handleOrderChange} />
+      <SearchBox resetFilters={resetFilters} resetOrder={resetOrder} />
     </div>
   );
 };

@@ -1,0 +1,15 @@
+.divTitle {
+  font-size: 1.4em;
+}
+.divFilters {
+  margin: 5px;
+}
+.selectFilters {
+  font-family: "Press Start 2P", system-ui;
+  padding: 2px;
+  border-radius: 5px;
+  border-color: silver;
+  border-width: 4px;
+  background-color: rgb(29, 29, 29);
+  color: white;
+}
