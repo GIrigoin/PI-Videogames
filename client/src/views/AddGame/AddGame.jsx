@@ -4,6 +4,7 @@ import { setModal } from "../../redux/actions";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "./AddGame.module.css";
 
 const AddGame = () => {
   const navigate = useNavigate();
@@ -35,6 +36,14 @@ const AddGame = () => {
   const [platformError, setPlatformError] = useState("");
   const [disableSubmit, setDisableSubmit] = useState(true);
 
+  const resetAllStates = () => {
+    setGameForm(initialGameform);
+    setErrors(initialErrors);
+    setPlatform("");
+    setPlatformError("");
+    setDisableSubmit(true);
+  };
+
   const validate = (name, value) => {
     const nameRegex = /^[A-Za-z0-9@\s\-._()&!?']{1,100}$/;
     const urlRegex =
@@ -52,6 +61,7 @@ const AddGame = () => {
           return "Name only could contain alphanumeric characters or @ ( ) & ' . _ - ! ?";
         return "";
       case "background_image":
+        if (value === "") return "";
         if (!urlRegex.test(value)) return "Not a valid URL";
         return "";
 
@@ -155,6 +165,8 @@ const AddGame = () => {
         setTimeout(() => {
           dispatch(setModal({ show: false }));
         }, 2000);
+        //Reseteo del form
+        resetAllStates();
       } else {
         // 4º Si hay coincidencia: si proviene de la api informar que ya existe y no se puede modificar
         if (!sameNameGame.userCreated) {
@@ -204,6 +216,8 @@ const AddGame = () => {
       setTimeout(() => {
         dispatch(setModal({ show: false }));
       }, 2000);
+      //Reseteo del form
+      resetAllStates();
     } catch (error) {
       dispatch(
         setModal({ show: true, type: "error", message: error.response.data })
@@ -218,130 +232,162 @@ const AddGame = () => {
   };
 
   return (
-    <div>
-      {/* <button onClick={handleOpenModal}>Abrir</button> */}
-      <div>
+    <div className={styles.divAddGame}>
+      <div className={styles.divTitle}>
         <h1>Add Game Info</h1>
       </div>
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>Name: </legend>
-          <input
-            type="text"
-            name="name"
-            value={gameForm.name}
-            onChange={handleChange}
-            required={true}
-          />
-          <span> *</span>
-          <p>{errors.name}</p>
-        </fieldset>
-        <fieldset>
-          <legend>Image: </legend>
-          <input
-            type="text"
-            name="background_image"
-            value={gameForm.image}
-            onChange={handleChange}
-          />
-          <p>{errors.image}</p>
-        </fieldset>
-        <fieldset>
-          <legend>Release date: </legend>
-          <input
-            type="date"
-            name="released"
-            value={gameForm.released}
-            onChange={handleChange}
-          />
-          <p>{errors.released}</p>
-        </fieldset>
-        <fieldset>
-          <legend>Rating: </legend>
-
-          <div>
-            <span>0 </span>
-            <input
-              type="range"
-              name="rating"
-              min="0"
-              max="5"
-              step="0.5"
-              value={gameForm.rating}
-              onChange={handleChange}
-            />
-            <span> 5 *</span>
-          </div>
-          <input
-            type="text"
-            name="rating"
-            value={gameForm.rating}
-            onChange={handleChange}
-            required={true}
-          />
-          <p>{errors.rating}</p>
-        </fieldset>
-        <fieldset>
-          <legend>Platforms: </legend>
-          <div>
-            <input
-              type="text"
-              name="platform"
-              value={platform}
-              onChange={handleChange}
-            />
-            <button
-              name="platforms"
-              onClick={handlePlatformsClick}
-              disabled={platformError !== ""}
-            >
-              Add
-            </button>
-            <p>{platformError}</p>
-          </div>
-          <ul>
-            {gameForm.platforms.map((platform) => (
-              <div>
-                <li>{platform}</li>
-                <button name={platform} onClick={handleDelPlatformsClick}>
-                  ❌
-                </button>
-              </div>
-            ))}
-          </ul>
-        </fieldset>
-        <fieldset>
-          <legend>Genres: </legend>
-
-          {genres.map((genre) => (
-            <label>
+      <form onSubmit={handleSubmit} className={styles.formGame}>
+        <div className={styles.divSection}>
+          <div className={styles.divNameImage}>
+            <fieldset className={styles.fieldsetBox}>
+              <legend className={styles.legends}>Name: </legend>
               <input
-                type="checkbox"
-                name={genre.id}
-                value={genre.name}
-                onChange={handleGenresCBChange}
+                type="text"
+                name="name"
+                value={gameForm.name}
+                onChange={handleChange}
+                required={true}
+                className={styles.inputs}
               />
-              {genre.name}
-            </label>
-          ))}
-        </fieldset>
-        <fieldset>
-          <legend>Description: </legend>
-          <textarea
-            name="description"
-            cols="30"
-            rows="10"
-            onChange={handleChange}
-            required={true}
-          ></textarea>
-          <span> *</span>
-          <p>{errors.description}</p>
-        </fieldset>
+              <p className={styles.pErrors}>{errors.name}</p>
+            </fieldset>
+            <fieldset className={styles.fieldsetBox}>
+              <legend className={styles.legends}>Image: </legend>
+              <input
+                type="text"
+                name="background_image"
+                value={gameForm.background_image}
+                onChange={handleChange}
+                className={styles.inputs}
+              />
+              <p className={styles.pErrors}>{errors.background_image}</p>
+            </fieldset>
+          </div>
+          <div className={styles.divPlatforms}>
+            <fieldset className={styles.fieldsetBox}>
+              <legend className={styles.legends}>Platforms: </legend>
+              <div>
+                <input
+                  type="text"
+                  name="platform"
+                  value={platform}
+                  onChange={handleChange}
+                  className={styles.inputs}
+                />
+                <button
+                  name="platforms"
+                  onClick={handlePlatformsClick}
+                  disabled={platformError !== ""}
+                  className={styles.buttons}
+                >
+                  <span className={styles.spanButtons}>Add</span>
+                </button>
+                <p className={styles.pErrors}>{platformError}</p>
+              </div>
+              <ul className={styles.ulPlatforms}>
+                {gameForm.platforms.map((platform) => (
+                  <div className={styles.itemPlatform}>
+                    <li>{platform}</li>
+                    <button
+                      name={platform}
+                      onClick={handleDelPlatformsClick}
+                      className={styles.buttonPlatform}
+                    >
+                      ❌
+                    </button>
+                  </div>
+                ))}
+              </ul>
+            </fieldset>
+          </div>
+        </div>
+        <div className={styles.divSection}>
+          <div className={styles.divReleaseRating}>
+            <fieldset className={styles.fieldsetBox}>
+              <legend className={styles.legends}>Release date: </legend>
+              <input
+                type="date"
+                name="released"
+                value={gameForm.released}
+                onChange={handleChange}
+                className={styles.inputs}
+              />
+              <p className={styles.pErrors}>{errors.released}</p>
+            </fieldset>
+            <fieldset className={styles.fieldsetBox}>
+              <legend className={styles.legends}>Rating: </legend>
+
+              <div>
+                <span className={styles.spanRating}>0</span>
+                <input
+                  type="range"
+                  name="rating"
+                  min="0"
+                  max="5"
+                  step="0.5"
+                  value={gameForm.rating}
+                  onChange={handleChange}
+                  className={styles.rangeRating}
+                />
+                <span className={styles.spanRating}>5</span>
+              </div>
+              <input
+                type="text"
+                name="rating"
+                value={gameForm.rating}
+                onChange={handleChange}
+                required={true}
+                className={styles.inputRating}
+              />
+              <p className={styles.pErrors}>{errors.rating}</p>
+            </fieldset>
+          </div>
+          <div className={styles.divGenre}>
+            <fieldset className={styles.fieldsetGenre}>
+              <legend className={styles.legends}>Genres: </legend>
+
+              {genres.map((genre) => (
+                <div className={styles.itemGenre}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name={genre.id}
+                      value={genre.name}
+                      onChange={handleGenresCBChange}
+                    />
+                    {genre.name}
+                  </label>
+                </div>
+              ))}
+            </fieldset>
+          </div>
+        </div>
+        <div className={styles.divSection}>
+          <fieldset className={styles.fieldsetBox}>
+            <legend className={styles.legends}>Description: </legend>
+            <textarea
+              name="description"
+              onChange={handleChange}
+              value={gameForm.description}
+              required={true}
+              className={styles.textDescription}
+              cols="30"
+              rows="10"
+            ></textarea>
+            <p className={styles.pErrors}>{errors.description}</p>
+          </fieldset>
+        </div>
         <div>
-          <button type="submit" disabled={disableSubmit}>
-            Add to DB
+          <button
+            type="submit"
+            disabled={disableSubmit}
+            className={styles.buttons}
+          >
+            <span className={styles.spanButtons}>Add to DB</span>
           </button>
-          <button onClick={handleHomeClick}>Back to Home</button>
+          <button onClick={handleHomeClick} className={styles.buttons}>
+            <span className={styles.spanButtons}>Back to Home</span>
+          </button>
         </div>
       </form>
 

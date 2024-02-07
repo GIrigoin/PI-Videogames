@@ -42,7 +42,7 @@ const Cards = () => {
   }, [showedGames]);
 
   return (
-    <div>
+    <div className={styles.divContainer}>
       <div className={styles.divCards}>
         {showedCards.map((game) => {
           return <Card {...game} key={game.id} />;

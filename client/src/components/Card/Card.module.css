@@ -1,0 +1,95 @@
+.divCard {
+  box-sizing: border-box;
+  width: 360px;
+  min-height: 535px;
+  padding: 5px;
+  background-image: url("../../assets/MushroomTile.png");
+  border-style: ridge;
+  border-width: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 0px 1px #000000, 0 0 10px 2px #0f0f0f,
+    inset 0 0 0px 1px #000000, inset 0 0 10px 2px #0f0f0f;
+  border-color: lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #213547;
+  /* color: #000000; */
+  margin-bottom: 10px;
+}
+.divCard:hover {
+  cursor: pointer;
+  box-shadow: 0 0 0px 1px rgb(167, 167, 167), 0 0 10px 2px whitesmoke;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.name {
+  width: 15em;
+  height: 5.5em;
+  font-size: 1.3em;
+}
+.name:hover {
+  cursor: pointer;
+}
+.divImageRating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameImage {
+  border: rgb(179, 179, 179) 7px ridge;
+  border-radius: 10px;
+  width: 180px;
+  margin-right: 10px;
+}
+
+.divRating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.minorTitle {
+  font-size: 1em;
+}
+.pRating {
+  font-size: 1.4em;
+}
+.genreItem {
+  width: 10em;
+  list-style-type: "🎮";
+}
+.buttons {
+  margin: 3px;
+  padding: 0;
+  border: none;
+  border-radius: 15px;
+  background: black;
+}
+.spanButtons {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 0.75em 1.5em;
+  background: white;
+  color: black;
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+.buttons:disabled .spanButtons {
+  color: dimgray;
+  background-color: lightgray;
+}
+.buttons:disabled .spanButtons:hover {
+  transform: translateY(-0.2em);
+}
+.buttons:hover .spanButtons {
+  transform: translateY(-0.33em);
+}
+
+.buttons:active .spanButtons {
+  transform: translateY(0);
+}

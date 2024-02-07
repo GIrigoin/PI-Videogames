@@ -1,12 +1,16 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./NotFound.module.css";
-import image from "../../assets/Logo.svg";
 const NotFound = () => {
+  const navigate = useNavigate();
   return (
-    <div className={styles.divTest}>
-      <h1>Lo lamento, la página está en otro castillo</h1>
-      <div>
-        <img src={image} alt="" />
+    <div className={styles.divNotFound}>
+      <div className={styles.divInfo}>
+        <h1 className={styles.text}>
+          Sorry, the page you want is in another castle
+        </h1>
+        <button className={styles.buttons} onClick={() => navigate("/home")}>
+          <span className={styles.spanButtons}>Home</span>
+        </button>
       </div>
     </div>
   );

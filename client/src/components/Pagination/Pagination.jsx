@@ -1,14 +1,26 @@
+import styles from "./Pagination.module.css";
+
 const Pagination = ({ currentPage, LAST_PAGE, handleClick }) => {
   const pages = Array.from(
     { length: LAST_PAGE },
     (element, index) => index + 1
   );
   return LAST_PAGE > 1 ? (
-    <div>
-      <button name="first" disabled={currentPage === 1} onClick={handleClick}>
+    <div className={styles.divPagination}>
+      <button
+        name="first"
+        disabled={currentPage === 1}
+        onClick={handleClick}
+        className={styles.buttonsPage}
+      >
         ◀◀
       </button>
-      <button name="prev" disabled={currentPage - 1 < 1} onClick={handleClick}>
+      <button
+        name="prev"
+        disabled={currentPage - 1 < 1}
+        onClick={handleClick}
+        className={styles.buttonsPage}
+      >
         ◀
       </button>
       {pages.map((page) => (
@@ -16,6 +28,7 @@ const Pagination = ({ currentPage, LAST_PAGE, handleClick }) => {
           name={page}
           disabled={page === currentPage}
           onClick={handleClick}
+          className={styles.buttonsPage}
         >
           {page}
         </button>
@@ -24,6 +37,7 @@ const Pagination = ({ currentPage, LAST_PAGE, handleClick }) => {
         name="next"
         disabled={currentPage + 1 > LAST_PAGE}
         onClick={handleClick}
+        className={styles.buttonsPage}
       >
         ▶
       </button>
@@ -32,6 +46,7 @@ const Pagination = ({ currentPage, LAST_PAGE, handleClick }) => {
         name="last"
         disabled={currentPage === LAST_PAGE}
         onClick={handleClick}
+        className={styles.buttonsPage}
       >
         ▶▶
       </button>
