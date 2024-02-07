@@ -25,7 +25,6 @@ const updateVideogame = async (req, res) => {
     if (background_image) attributes = { ...attributes, background_image };
     if (released) attributes = { ...attributes, released };
     if (rating) attributes = { ...attributes, rating };
-    console.log(Object.keys(attributes));
 
     await updatedVideogame.update(attributes, {
       where: {
