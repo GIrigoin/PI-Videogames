@@ -25,21 +25,26 @@ const Card = ({ id, name, background_image, userCreated, genres, rating }) => {
 
       <div className={styles.divImageRating}>
         {/* <div className={styles.divImage}> */}
-        <img src={background_image} alt={name} className={styles.gameImage} />
+        {background_image && (
+          <img src={background_image} alt={name} className={styles.gameImage} />
+        )}
         {/* </div> */}
         <div className={styles.divRating}>
           <h3 className={styles.minorTitle}>Rating</h3>
           <p className={styles.pRating}>{rating}</p>
         </div>
       </div>
-      <div>
-        <h3 className={styles.minorTitle}>Genres</h3>
-        <ul>
-          {genres.map((genre) => (
-            <li className={styles.genreItem}>{genre.name}</li>
-          ))}
-        </ul>
-      </div>
+
+      {genres.length > 0 && (
+        <div>
+          <h3 className={styles.minorTitle}>Genres</h3>
+          <ul>
+            {genres.map((genre) => (
+              <li className={styles.genreItem}>{genre.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {userCreated ? (
         <button onClick={handleDeleteClick} className={styles.buttons}>

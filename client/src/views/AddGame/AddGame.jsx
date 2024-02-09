@@ -139,9 +139,6 @@ const AddGame = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //Formateo description como los que envia la api (HTML)
-    const description = `<p>${gameForm.description}</p>`;
-    setGameForm({ ...gameForm, description });
 
     try {
       // Con el formulario listo primero verifico si el juego existe
@@ -152,6 +149,10 @@ const AddGame = () => {
       const sameNameGame = data.find(
         (game) => game.name.toUpperCase() === gameForm.name.toUpperCase()
       );
+      //Formateo description como los que envia la api (HTML)
+      const description = `<p>${gameForm.description}</p>`;
+      setGameForm({ ...gameForm, description });
+      console.log(gameForm.description);
       // 3º Si NO hay coincidencia: Crear la entrada en la DB
       if (!sameNameGame) {
         await axios.post(endpoint, gameForm);

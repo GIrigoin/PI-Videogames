@@ -20,9 +20,10 @@
 .buttonsPage {
   border-radius: 15px;
   border: 2px none white;
+  color: #213547;
 }
 .buttonsPage:hover {
-  border: #000000 2px solid;
+  border: #213547 2px solid;
 }
 /* .buttonspage:focus {
   border: #000000 2px solid;

@@ -19,13 +19,17 @@ const ModalDialog = ({
       <div className={styles.divBackground}>
         <div className={styles.divDialog}>
           <h2>{message}</h2>
-          {type === "success" && <h1>✔</h1>}
-          {type === "error" && <h1>❌</h1>}
-          {type === "loading" && <h1>🕹</h1>}
+          {type === "success" && <h1 className={styles.h1Success}>✔</h1>}
+          {type === "error" && <h1 className={styles.h1Error}>✖</h1>}
+          {type === "loading" && <h1 className={styles.h1Loading}>🕹</h1>}
           {type === "confirmation" && (
-            <div>
-              <button onClick={handleYesClick}>Yes</button>
-              <button onClick={handleNoClick}>No</button>
+            <div className={styles.divButtons}>
+              <button onClick={handleYesClick} className={styles.buttons}>
+                <span className={styles.spanButtons}>Yes</span>
+              </button>
+              <button onClick={handleNoClick} className={styles.buttons}>
+                <span className={styles.spanButtons}>No</span>
+              </button>
             </div>
           )}
         </div>

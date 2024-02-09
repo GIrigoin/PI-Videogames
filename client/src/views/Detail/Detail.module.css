@@ -1,0 +1,125 @@
+.divDetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Press Start 2P", system-ui;
+}
+
+.divContainer {
+  width: 90vw;
+  min-height: 90vh;
+  box-sizing: border-box;
+  padding: 10px;
+  background-image: url("../../assets/MushroomTile.png");
+  border-style: ridge;
+  border-width: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 0px 1px #000000, 0 0 10px 2px #0f0f0f,
+    inset 0 0 0px 1px #000000, inset 0 0 10px 2px #0f0f0f;
+  border-color: lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: #213547;
+  margin: 10px 0;
+}
+.h1Title {
+  /* height: 1.4em; */
+  /* font-size: 2em; */
+  background-color: rgb(183, 239, 254, 0.8);
+  border: 10px;
+  border-style: ridge;
+  border-radius: 20px;
+  box-shadow: 0 0 0px 1px #000000, 0 0 10px 2px #0f0f0f,
+    inset 0 0 0px 1px #000000, inset 0 0 10px 2px #0f0f0f;
+  border-color: lightgray;
+  margin: 5px 0;
+  padding: 0 1em;
+}
+
+.divSection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+}
+
+.gameImage {
+  border: rgb(179, 179, 179) 7px ridge;
+  border-radius: 10px;
+  width: 500px;
+  margin-right: 10px;
+}
+.divDescription {
+  margin-top: 10px;
+  width: 70%;
+  font-size: 1.5em;
+}
+.divProperty {
+  border: #213547 solid;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(183, 239, 254, 0.8);
+  margin: 10px;
+}
+.legendProperty {
+  border: #000000 solid;
+  border-radius: 15px;
+  width: 80%;
+  color: rgb(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 5px;
+}
+.buttons {
+  font-size: 2em;
+  margin: 10px 3px;
+  padding: 0;
+  border: none;
+  border-radius: 15px;
+  background: black;
+}
+.spanButtons {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 0.75em 1.5em;
+  background: white;
+  color: black;
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+.buttons:disabled .spanButtons {
+  color: dimgray;
+  background-color: lightgray;
+}
+.buttons:disabled .spanButtons:hover {
+  transform: translateY(-0.2em);
+}
+.buttons:hover .spanButtons {
+  transform: translateY(-0.33em);
+}
+
+.buttons:active .spanButtons {
+  transform: translateY(0);
+}
+
+@media screen and (min-width: 1360px) {
+  .gameImage {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .gameImage {
+    width: 380px;
+  }
+  .divSection {
+    flex-direction: column;
+  }
+  .h1Title {
+    font-size: 0.6em;
+  }
+}
