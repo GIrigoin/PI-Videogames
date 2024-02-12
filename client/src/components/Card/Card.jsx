@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { loadGames } from "../../redux/actions";
+import { loadGames, setModal } from "../../redux/actions";
 import styles from "./Card.module.css";
 
 const Card = ({ id, name, background_image, userCreated, genres, rating }) => {
@@ -15,8 +15,27 @@ const Card = ({ id, name, background_image, userCreated, genres, rating }) => {
   const handleDeleteClick = async (event) => {
     event.stopPropagation();
     const endpoint = "http://localhost:3001/videogames";
-    await axios.delete(`${endpoint}/${id}`);
-    dispatch(loadGames());
+    try {
+      await axios.delete(`${endpoint}/${id}`);
+      dispatch(loadGames());
+      dispatch(
+        setModal({
+          show: true,
+          type: "success",
+          message: "Game deleted from DB",
+        })
+      );
+      setTimeout(() => {
+        dispatch(setModal({ show: false }));
+      }, 2000);
+    } catch (error) {
+      dispatch(
+        setModal({ show: true, type: "error", message: error.response.data })
+      );
+      setTimeout(() => {
+        dispatch(setModal({ show: false }));
+      }, 2000);
+    }
   };
 
   return (

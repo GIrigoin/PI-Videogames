@@ -9,7 +9,7 @@ const { DataTypes } = require("sequelize");
 // Rating. *
 
 module.exports = (sequelize) => {
-  sequelize.define("Videogame", {
+  return sequelize.define("Videogame", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
