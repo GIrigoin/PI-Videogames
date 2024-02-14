@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "./Detail.module.css";
 
 const Detail = () => {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const { id } = useParams();
   const dialog = useSelector((state) => state.modalDialog);
   const dispatch = useDispatch();
