@@ -1,7 +1,6 @@
 import * as React from "react";
-import { fireEvent, queryByText, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ModalDialog from "../src/components/ModalDialog/ModalDialog.jsx";
-import { expect, it } from "vitest";
 
 // ModalDialog = ({
 //     show, boolean

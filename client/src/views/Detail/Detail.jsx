@@ -63,7 +63,7 @@ const Detail = () => {
                 className={styles.gameImage}
               />
             )}
-            <div>
+            <div className={styles.divRatingReleased}>
               <fieldset className={styles.divProperty}>
                 <legend className={styles.legendProperty}>Rating</legend>
                 <h2>{game.rating}</h2>

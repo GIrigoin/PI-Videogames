@@ -44,7 +44,13 @@
   align-items: center;
   width: 90%;
 }
-
+.divRatingReleased {
+  margin: 0 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
 .gameImage {
   border: rgb(179, 179, 179) 7px ridge;
   border-radius: 10px;
