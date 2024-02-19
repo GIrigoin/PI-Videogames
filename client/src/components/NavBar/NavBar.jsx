@@ -2,12 +2,11 @@ import { useState } from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import FilterBox from "../FilterBox/FilterBox";
 import OrderBox from "../OrderBox/OrderBox";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterGames, orderGames } from "../../redux/actions";
 import styles from "./NavBar.module.css";
 
 const NavBar = () => {
-  const showedGames = useSelector((state) => state.showedGames);
   const dispatch = useDispatch();
   // Estados y funciones relacionados con los filtros
   const initialFilters = { genre: "All", userCreated: "All" };
@@ -47,7 +46,6 @@ const NavBar = () => {
       );
     }
     if (event.target.name === "order") {
-      // console.log(typeof event.target.value);
       const way = event.target.value === "0" ? "ASC" : "DES";
       setOrder({ ...order, [event.target.name]: way });
       dispatch(orderGames({ ...order, [event.target.name]: way }));

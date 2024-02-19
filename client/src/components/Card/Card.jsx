@@ -3,8 +3,10 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadGames, setModal } from "../../redux/actions";
 import styles from "./Card.module.css";
+import noimage from "../../assets/noimage.svg";
 
 const Card = ({ id, name, background_image, userCreated, genres, rating }) => {
+  const image = background_image || noimage;
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/detail/${id}`);
@@ -44,9 +46,9 @@ const Card = ({ id, name, background_image, userCreated, genres, rating }) => {
 
       <div className={styles.divImageRating}>
         {/* <div className={styles.divImage}> */}
-        {background_image && (
-          <img src={background_image} alt={name} className={styles.gameImage} />
-        )}
+        {/* {background_image && ( */}
+        <img src={image} alt={name} className={styles.gameImage} />
+        {/* )} */}
         {/* </div> */}
         <div className={styles.divRating}>
           <h3 className={styles.minorTitle}>Rating</h3>

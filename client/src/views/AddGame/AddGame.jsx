@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import ModalDialog from "../../components/ModalDialog/ModalDialog";
 import { setModal } from "../../redux/actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./AddGame.module.css";
@@ -37,11 +37,12 @@ const AddGame = () => {
   const [disableSubmit, setDisableSubmit] = useState(true);
 
   const resetAllStates = () => {
-    setGameForm(initialGameform);
-    setErrors(initialErrors);
-    setPlatform("");
-    setPlatformError("");
-    setDisableSubmit(true);
+    // setGameForm(initialGameform);
+    // setErrors(initialErrors);
+    // setPlatform("");
+    // setPlatformError("");
+    // setDisableSubmit(true);
+    window.location.reload(true);
   };
 
   const validate = (name, value) => {
@@ -152,7 +153,6 @@ const AddGame = () => {
       //Formateo description como los que envia la api (HTML)
       const description = `<p>${gameForm.description}</p>`;
       setGameForm({ ...gameForm, description });
-      console.log(gameForm.description);
       // 3º Si NO hay coincidencia: Crear la entrada en la DB
       if (!sameNameGame) {
         await axios.post(endpoint, gameForm);
@@ -231,6 +231,7 @@ const AddGame = () => {
   const handleNoClick = () => {
     dispatch(setModal({ show: false }));
   };
+  useEffect(() => {}, [gameForm]);
 
   return (
     <div className={styles.divAddGame}>

@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { searchByName, loadGames, setModal } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { searchByName, loadGames } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
-import ModalDialog from "../ModalDialog/ModalDialog";
 import styles from "./SearchBox.module.css";
 
 const SearchBox = ({ resetFilters, resetOrder }) => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const dispatch = useDispatch();
-  const dialog = useSelector((state) => state.modalDialog);
   const handleChange = (event) => {
     setName(event.target.value);
   };
@@ -56,11 +54,6 @@ const SearchBox = ({ resetFilters, resetOrder }) => {
           <span className={styles.spanButtons}>Add Game to DB</span>
         </button>
       </div>
-      <ModalDialog
-        show={dialog.show}
-        type={dialog.type}
-        message={dialog.message}
-      />
     </div>
   );
 };

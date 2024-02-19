@@ -60,7 +60,6 @@ const searchByName = (name) => {
         setTimeout(() => {
           dispatch(setModal({ show: false }));
         }, 2000);
-        // console.log(error.response.data);
       });
   };
 };
